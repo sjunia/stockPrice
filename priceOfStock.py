@@ -21,30 +21,29 @@ a.m.k. í algjöru lágmarki.
 
 
 def bref():
-    try:
-        fjoldi = int(input("Enter number of shares: "))
-        return fjoldi
-    except:
-        print("Invalid number!")
-        bref()
+    while True:
+        try:
+            fjoldi = int(input("Enter number of shares: "))
+            return fjoldi
+        except:
+            print("Invalid number!")
+        
 
 def verdid():
-    verd = ""
-    try:
-        verd = str(input("Enter price (dollars, numerator, denominator): "))
-        numbers = verd.split(" ")
-        if numbers[0].isdigit() and numbers[1].isdigit() and numbers[2].isdigit():
-            return numbers
-        else:
+    while True:
+        verd = ""
+        try:
+            verd = str(input("Enter price (dollars, numerator, denominator): "))
+            numbers = verd.split(" ")
+            if numbers[0].isdigit() and numbers[1].isdigit() and numbers[2].isdigit():
+                return numbers
+            else:
+                raise TypeError 
+        except:
             print("Invalid price!")
-            verdid()     
-    except:
-        print("Invalid price!")
-        verdid()
 
-def stock_price():
-    fjoldi = bref()
-    tolur = verdid()
+
+def stock_price(fjoldi, tolur):
     deiling = float(tolur[1]) / float(tolur[2])
     saman = float(tolur[0]) + deiling
     heild = saman * fjoldi
@@ -54,8 +53,10 @@ def stock_price():
 
 svar = "y"
 while svar is "y":
-    stock = stock_price()
-    print('{:.2f}'.format(float(stock)))
+    fjoldi = bref()
+    tolur = verdid()
+    stock = stock_price(fjoldi, tolur)
+    print(str(fjoldi) + " shares with market price " + str(tolur[0]) + " " + str(tolur[1]) + "/" + str(tolur[2]) + " have value ${:.2f}".format(float(stock)))
     svar= input("Continue: ")
 
 
